@@ -13,4 +13,5 @@ for i in f:
                 ballsd[amount[1]] = int(amount[0])
     power = int(ballsd["red"])*int(ballsd["green"])*int(ballsd["blue"])
     S += power
+    #ok
 print(S)
