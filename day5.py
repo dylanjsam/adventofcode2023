@@ -37,11 +37,24 @@ def inputoutput(input, map):
 
 maps = findmaps(f)
 locations = []
+
+def newseeds(s):
+    seeds = []
+    for i in range(0, len(s)):
+        if i % 2 != 0:
+            for l in range(0, int(s[i])):
+                seeds.append(int(s[i-1])+l)
+    return seeds
+
+print(newseeds(findseeds(f)))
+
+
+
 for seed in findseeds(f):
     input = int(seed)
     for name in maps:
         input = inputoutput(input, maps[name])
     locations.append(input)
 print(min(locations))
-            
+
 
