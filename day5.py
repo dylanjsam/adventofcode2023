@@ -1,12 +1,47 @@
 f = open('day5.txt', 'r')
-def findloc(seed, maps):
-        print(seed)
+def findseeds(file):
+    file.seek(0)
+    seeds = []
+    for i in file.readline().split():
+        if i.isdigit():
+            seeds.append(i)
+    return seeds
+
+def findmaps(file):
+    z = 1
+    file.seek(0)
+    maps = {}
+    file.readline()
+    file.readline()
+    lines = file.readlines()
+    name = "blank"
+    map = []
+    for line in lines:
+        z += 1
+        if line.strip():
+            if line.split()[0].isdigit() == False or z == 196:
+                maps[name] = map
+                map = []
+                name = line.strip()
+            else:
+                map.append(line.split()) 
+    return(maps)
 
 def inputoutput(input, map):
+    output = input
     for line in map:
-          output = input
-          if input >= line[1] and input <= (line[1]+line[2]):
-                output = line[0] + input - line[1]
+        if int(input) >= int(line[1]) and int(input) < int((int(line[1])+int(line[2]))):
+            output = int(line[0]) + int(input) - int(line[1])
+            break
     return output
 
-print(inputoutput(500, [[50, 450, 100], [30, 500, 50]]))
+maps = findmaps(f)
+locations = []
+for seed in findseeds(f):
+    input = int(seed)
+    for name in maps:
+        input = inputoutput(input, maps[name])
+    locations.append(input)
+print(min(locations))
+            
+
