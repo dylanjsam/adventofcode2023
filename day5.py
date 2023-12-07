@@ -6,7 +6,7 @@ def findseeds(file):
         if i.isdigit():
             seeds.append(i)
     return seeds
-
+seeds = findseeds(f)
 def findmaps(file):
     z = 1
     file.seek(0)
@@ -41,12 +41,12 @@ locations = []
 def newseeds(s):
     seeds = []
     for i in range(0, len(s)):
-        if i % 2 != 0:
+        if int(i) % 2 != 0:
             for l in range(0, int(s[i])):
                 seeds.append(int(s[i-1])+l)
     return seeds
 
-print(newseeds(findseeds(f)))
+print(newseeds(seeds))
 
 
 
