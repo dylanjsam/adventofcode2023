@@ -1,23 +1,17 @@
-f = open('day3.txt', 'r')
-partsign = ["%", "#", "*", "/", "=", "$", "&", "-", "@", "+"]
-def part1(file):
-    S = 0
-    lines = []
-    for line in file:
-        stripped = [*line]
-        stripped[-1] = stripped[-1].strip()
-        lines.append(stripped)
-    
-    for i in range(0, len(lines)+1):
-        z = 0
-        if i == 0:
-            for char in lines[0]:
-                if char.isdigit() == True:
-                    if lines[1][z-1] in partsign or lines[1][z] in partsign or lines[1][z+1] in partsign:
-                        print("Found star", char)
+d = open('day3.txt').read().splitlines()
+map = []
+S = 0
+for line in d:
+    p = [*line]
+    map.append(p)
+for j, row in enumerate(map):
+    p = 0
+    for i, char in enumerate(reversed(row)):
+        if i != 0 or i != (len(row) - 1) or j != 0 or j != (len(map)-1):
+            if char == '.':
+                z = 0
+                l = p
+            elif char.isdigit:
+                p += int(char)*10**z
                 z += 1
-        
-
-
-
-print(part1(f))
+            if reversed(map[j-1])[i-1] in
