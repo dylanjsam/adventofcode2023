@@ -1,41 +1,35 @@
 from collections import Counter
 import operator
+f = open('day7.txt').read().split('\n')
 
-f = open('day7.txt')
+def convert(f):
+    p = {}
+    for line in f:
+        hand = ['23456789TJQKA'.index(j) for j in line.split()[0]]
+        p[tuple(hand)] = int(line.split()[1])
+    return p
 
-def process(file):
-    hands = {}
-    for line in file:
-        op = line.split()
-        hands[op[0]] = int(op[1])
-    return hands
+converted = convert(f)
 
-def convert(dict):
-    converted = {}
-    for hand in dict:
-        handc = ['23456789TJQKA'.index(i) for i in hand]
-        p = tuple(reversed(sorted(handc)))
-        converted[p] = [tuple(sorted((Counter(handc)).values())), dict[hand]]
-    return converted
-
-dict = convert(process(f))
-
-def sorter(dict):
-    pos = [(1,1,1,1,1),(1,1,1,2),(1,2,2),(1,1,3),(2,3),(1,4),(5,)]
+def sort(converted):
     HC = []; OP = []; TP = []; TK = []; FH = []; FoK = []; FiK = []
     t = [HC, OP, TP, TK, FH, FoK, FiK]
-    for hand in dict:
-        i = pos.index(dict[hand][0])
-        t[i].append(hand) 
-    p = []
+    ts = [(1, 1, 1, 1, 1), (1, 1, 1, 2),(1, 2, 2),(1, 1, 3),(2, 3),(1, 4),(5,)]
+    for i in converted:
+        index = ts.index(tuple(sorted(Counter(i).values())))
+        t[index].append(i)
+    q = []
     for i in t:
-        p.append(sorted(i, key=operator.itemgetter(0,1,2,3,4)))
-    total = p[0] + p[1] + p[2] + p[3] + p[4] + p[5] + p[6]
-    return total
-sorted = sorter(dict)
-def count(dict, sorted):
+        a = sorted(i, key=operator.itemgetter(0,1,2,3,4))
+        q.append(a)
+    t = []
+    for i in range(0, 7):
+        t+= q[i]
+    return(t)
+sorted = sort(converted)
+def count(dict, list):
     T = 0
-    for i, hand in enumerate(sorted):
-        T += (i+1)*dict[hand][1]
+    for i, hand in enumerate(list):
+        T+= dict[hand]*(i+1)
     return(T)
-print(sorted)
+
